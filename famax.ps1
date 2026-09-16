@@ -12,6 +12,32 @@ $ErrorActionPreference = "Stop"
 
 try {
 
+# 0. Banniere FMX (style Chris Titus)
+$banner = @'
+FFFFFFFFFFFFFFFFFFFFFF   MMMMMMMM               MMMMMMMM
+F::::::::::::::::::::F   M:::::::M             M:::::::M
+F::::::::::::::::::::F   M::::::::M           M::::::::M
+FF::::::FFFFFFFFF::::F   M:::::::::M         M:::::::::M
+  F:::::F       FFFFFF   M::::::::::M       M::::::::::M
+  F:::::F                M:::::::::::M     M:::::::::::M
+  F::::::FFFFFFFFFF      M:::::::M::::M   M::::M:::::::M  xxxxxxx      xxxxxxx
+  F:::::::::::::::F      M::::::M M:::M   M:::M M::::::M   x:::::x    x:::::x
+  F:::::::::::::::F      M::::::M  M:::M M:::M  M::::::M    x:::::x  x:::::x
+  F::::::FFFFFFFFFF      M::::::M   M:::M:::M   M::::::M     x:::::xx:::::x
+  F:::::F                M::::::M    M:::::M    M::::::M      x::::::::::x
+  F:::::F                M::::::M     MMMMM     M::::::M       x::::::::x
+FF:::::::FF              M::::::M               M::::::M       x::::::::x
+F::::::::FF              M::::::M               M::::::M      x::::::::::x
+F::::::::FF              M::::::M               M::::::M     x:::::xx:::::x
+FFFFFFFFFFF              MMMMMMMM               MMMMMMMM    x:::::x  x:::::x
+                                                           x:::::x    x:::::x
+                                                          xxxxxxx      xxxxxxx
+'@
+Write-Host $banner -ForegroundColor Red
+Write-Host "  FaMaxOpti - Panel d'optimisation" -ForegroundColor White
+Write-Host "  discord.gg/fmx" -ForegroundColor DarkGray
+Write-Host ""
+
 # 1. Auto-elevation admin (comme Chris Titus qui exige admin)
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 if (-not $isAdmin) {
