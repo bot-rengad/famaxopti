@@ -4,8 +4,8 @@
 #
 # A PERSONNALISER : mets ton lien direct vers l'exe ci-dessous (ligne $ExeUrl)
 
-$ExeUrl = "https://github.com/TONUSER/FaMaxOpti/releases/latest/download/FaMaxOpti-Portable.exe"
-$LauncherUrl = "https://raw.githubusercontent.com/TONUSER/FaMaxOpti/main/famax.ps1"
+$ExeUrl = "https://github.com/bot-rengad/famaxopti/releases/latest/download/FaMaxOpti-Portable.exe"
+$LauncherUrl = "https://raw.githubusercontent.com/bot-rengad/famaxopti/main/famax.ps1"
 
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
