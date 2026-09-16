@@ -1,6 +1,6 @@
 # FaMaxOpti - Launcher 1-ligne style Chris Titus
 # Usage chez le client (PowerShell) :
-#   irm https://raw.githubusercontent.com/TONUSER/FaMaxOpti/main/famax.ps1 | iex
+#   irm https://raw.githubusercontent.com/bot-rengad/famaxopti/main/famax.ps1 | iex
 #
 # A PERSONNALISER : mets ton lien direct vers l'exe ci-dessous (ligne $ExeUrl)
 
@@ -10,12 +10,15 @@ $LauncherUrl = "https://raw.githubusercontent.com/bot-rengad/famaxopti/main/fama
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+try {
+
 # 1. Auto-elevation admin (comme Chris Titus qui exige admin)
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 if (-not $isAdmin) {
     Write-Host "Elevation administrateur..." -ForegroundColor Yellow
+    # -NoExit pour que la fenetre bleue RESTE ouverte si erreur
     $cmd = "irm '$LauncherUrl' | iex"
-    Start-Process powershell.exe -ArgumentList "-NoProfile","-ExecutionPolicy","Bypass","-Command",$cmd -Verb RunAs
+    Start-Process powershell.exe -ArgumentList "-NoProfile","-ExecutionPolicy","Bypass","-NoExit","-Command",$cmd -Verb RunAs
     exit
 }
 
@@ -36,6 +39,8 @@ if ($needDownload) {
     $ProgressPreference = "SilentlyContinue"
     Invoke-WebRequest -Uri $ExeUrl -OutFile "$exe.tmp" -UseBasicParsing
     Move-Item -LiteralPath "$exe.tmp" -Destination $exe -Force
+    # debloque l'exe (sinon SmartScreen peut le bloquer en silence)
+    Unblock-File -Path $exe -ErrorAction SilentlyContinue
     Write-Host "Telecharge OK." -ForegroundColor Green
 } else {
     Write-Host "FaMaxOpti deja en cache, lancement direct." -ForegroundColor Green
@@ -44,3 +49,11 @@ if ($needDownload) {
 # 4. Lance le panel (l'exe demande deja admin via son manifeste)
 Write-Host "Ouverture du panel FaMaxOpti..." -ForegroundColor Cyan
 Start-Process -FilePath $exe
+Write-Host "Panel lance. Tu peux fermer cette fenetre." -ForegroundColor Green
+
+} catch {
+    Write-Host ""
+    Write-Host ("ERREUR : " + $_.Exception.Message) -ForegroundColor Red
+    Write-Host ""
+    Read-Host "Appuie sur Entree pour fermer"
+}
